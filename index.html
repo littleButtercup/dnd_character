@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="dnd.css"/>
+  <title></title>
+</head>
+
+<body>
+  <div class="choiceCharacter">
+    <h1 class="choiceCharacterDnD">D&D </h1>
+    <div id="characterList">
+      <select id="characterOption" onchange="loadPage(this.value)"></select>
+    </div>
+  </div>
+  <div class="thirdDisp1">
+
+    <input type="string" class="thirdDisp" id="characterName" placeholder = "имя персонажа" onchange="onSaveField(this)"></input>
+    <label for="characterClass" class="thirdDisp">класс</label>
+
+    <select id="characterClass" class="thirdDisp" onchange="onSaveField(this)">
+      <option value="Монах">Монах</option>
+      <option value="Жрец">Жрец</option>
+      <option value="Чародей">Чародей</option>
+      <option value="Колдун">Колдун</option>
+      <option value="Волшебник">Волшебник</option>
+      <option value="Варвар">Варвар</option>
+      <option value="Воин">Воин</option>
+      <option value="Плут">Плут</option>
+      <option value="Бард">Бард</option>
+      <option value="Друид">Друид</option>
+      <option value="Паладин">Паладин</option>
+      <option value="Следопыт">Следопыт</option>
+    </select>
+
+    <label for="characterLevel" class="thirdDisp">уровень</label>
+
+    <input type="number" class="thirdDisp" placeholder = "уровень персонажа" id="characterLevel" onchange="onSaveField(this)" />
+
+    <div class="thirdDisp">предыстория</div>
+
+    <select id="characterBackground" class="thirdDisp" onchange="onSaveField(this)">
+      <option value="Прислужник">Прислужник</option>
+      <option value="Шарлатан">Шарлатан</option>
+      <option value="Преступник">Преступник</option>
+      <option value="Артист">Артист</option>
+      <option value="Народный герой">Народный герой</option>
+      <option value="Гильдейский ремесленник">Гильдейский ремесленник</option>
+      <option value="Отшельник">Отшельник</option>
+      <option value="Благородный">Благородный</option>
+      <option value="Чужеземец">Чужеземец</option>
+      <option value="Мудрец">Мудрец</option>
+      <option value="Моряк">Моряк</option>
+      <option value="Солдат">Солдат</option>
+      <option value="Беспризорник">Беспризорник</option>
+    </select>
+
+    <div class="thirdDisp">раса</div>
+    <select id="characterRace" class="thirdDisp" onchange="onSaveField(this)">
+      <option value="Ааракокра">Ааракокра</option>
+      <option value="Гном">Гном</option>
+      <option value="Голиаф">Голиаф</option>
+      <option value="Грибнит">Грибнит</option>
+      <option value="Дварф">Дварф</option>
+      <option value="Дженази">Дженази</option>
+      <option value="Драконорожденный">Драконорожденный</option>
+      <option value="Полуорк">Полуорк</option>
+      <option value="Полурослик">Полурослик</option>
+      <option value="Полуэльф">Полуэльф</option>
+      <option value="Пробужденный">Пробужденный</option>
+      <option value="Сильва">Сильва</option>
+      <option value="Тифлинг">Тифлинг</option>
+      <option value="Человек">Человек</option>
+      <option value="Эльф">Эльф</option>
+    </select>
+
+    <input id="playerName" class="thirdDisp" placeholder="Название компании" onchange="onSaveField(this)"></input>
+
+  </div>
+
+
+  <div class="container4 ">
+    <div class="blockPhoto">
+
+      <img id="avatar"/>
+      <input type="file" accept="image/*" onchange="loadFile(this)">
+
+      <div class="container3 bee2">
+        <div id = "klassArmor">КД</div>
+        <div id = "bonusMaster"></div>
+        <div id = "totalWeight"></div>
+        <div class="helthLabel">жизни</div>
+        <div class="container centerCont">
+          <input type = "number" class="healthInput" id="currentHealth" onchange="onSaveField(this)"></input>
+          <span class="delimiter">/</span>
+          <input type="number" class="healthInput" id="generalHealth" onchange="onSaveField(this)"></input>
+        </div>
+      </div>
+    </div>
+    <div class = "item2"><div class = "item1">оружие</div>
+    <div class="weaponContainer">
+      <div id ="characterWeapon"></div>
+      <div id="damageWeapon"></div>
+    </div>
+    <div class = "item1">броня и щит</div>
+    <div>
+      <select id="choiceArmory" onchange="saveStat('choiceArmory', this.value)">
+      </select>
+      <select id="choiceShild" onchange="saveStat('choiceShild', this.value)">щиты
+      </select>
+    </div>
+
+    <div class="item1">снаряжение</div>
+    <div id="introduced"></div>
+  </div>
+</div>
+
+
+<div class="container">
+
+  <div class="characteristicPanel bee3">
+
+    <h3>Характеристики</h3>
+    <div>сила</div>
+    <div class="characterRow">
+
+      <input type="number" class="characterInput" id="characterStrangth" onchange="onChangeStat(this, 'characterStrangthDiceBonus')" />
+      <div id="characterStrangthDiceBonus" class = "indent"></div>
+    </div>
+
+
+
+    <div>
+      <div>ловкость</div>
+      <div class="characterRow">
+
+        <input type="number" class="characterInput" id="characterAgility" onchange="onChangeStat(this, 'characterAgilityDiceBonus')" />
+        <div id="characterAgilityDiceBonus" class = "indent"></div>
+      </div>
+    </div>
+
+
+
+    <div>
+      <div>телосложение</div>
+      <div class="characterRow">
+
+        <input type="number" class="characterInput" id="characterPhysique" onchange="onChangeStat(this, 'characterPhysiqueDiceBonus')" />
+        <div id="characterPhysiqueDiceBonus" class = "indent"></div>
+      </div>
+    </div>
+
+
+
+    <div>
+      <div>интеллект</div>
+      <div class="characterRow">
+
+        <input type="number" class="characterInput" id="characterIntellect" onchange="onChangeStat(this, 'characterIntellectDiceBonus')" />
+        <div id="characterIntellectDiceBonus" class = "indent"></div>
+      </div>
+    </div>
+
+
+
+    <div>
+      <div>мудрость</div>
+      <div class="characterRow">
+
+        <input type="number" class="characterInput" id="characterSapience" onchange="onChangeStat(this, 'characterSapienceDiceBonus')" />
+        <div id="characterSapienceDiceBonus" class = "indent"></div>
+      </div>
+    </div>
+
+
+
+    <div>
+      <div>харизма</div>
+      <div class="characterRow">
+
+        <input type="number" class="characterInput" id="characterCharisma" onchange="onChangeStat(this, 'characterCharismaDiceBonus')" />
+        <div id="characterCharismaDiceBonus" class = "indent"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+    <h3>Навыки</h3>
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsAcrobatics"
+      onchange="onChangeSkills(this,'characterAcrobaticsDiceBonus', 'characterAgility')">
+      <div class="agilityLabel">Акробатика(Лов)</div></input>
+      <div id="characterSkillsAcrobaticsDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsAthletics"
+      onchange="onChangeSkills(this,'characterAthleticsDiceBonus','characterStrangth')">
+      <div class="agilityLabel">Атлетика(Сил)</div></input>
+      <div id="characterSkillsAthleticsDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsMagic"
+      onchange="onChangeSkills(this,'characterMagicDiceBonus','characterIntellect')">
+      <div class="agilityLabel">Магия(Инт)</div></input>
+      <div id="characterSkillsMagicDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsDeceit"
+      onchange="onChangeSkills(this,'characterDeceitDiceBonus','characterCharisma')">
+      <div class="agilityLabel">Обман(Хар)</div></input>
+      <div id="characterSkillsDeceitDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsHistory"
+      onchange="onChangeSkills(this,'characterHistoryDiceBonus','characterIntellect')">
+      <div class="agilityLabel">История(Инт)</div></input>
+      <div id="characterSkillsHistoryDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsDiscernment"
+      onchange="onChangeSkills(this,'characterDiscernmentDiceBonus','characterSapience')">
+      <div class="agilityLabel">Проницательность(Муд)</div></input>
+      <div id="characterSkillsDiscernmentDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsIntimidation"
+      onchange="onChangeSkills(this,'characterIntimidationDiceBonus','characterCharisma')">
+      <div class="agilityLabel">Запугивание(Хар)</div></input>
+      <div id="characterSkillsIntimidationDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsInvestigation"
+      onchange="onChangeSkills(this,'characterInvestigationDiceBonus','characterIntellect')">
+      <div class="agilityLabel">Расследование(Инт)</div></input>
+      <div id="characterSkillsInvestigationDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsMedicine"
+      onchange="onChangeSkills(this,'characterMedicineDiceBonus','characterSapience')">
+      <div class="agilityLabel">Медицина(Муд)</div></input>
+      <div id="characterSkillsMedicineDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsNature"
+      onchange="onChangeSkills(this,'characterNatureDiceBonus','characterSapience')">
+      <div class="agilityLabel">Природа(Муд)</div></input>
+      <div id="characterSkillsNatureDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsPerception"
+      onchange="onChangeSkills(this,'characterPerceptionDiceBonus','characterSapience')">
+      <div class="agilityLabel">Восприятие(Муд)</div></input>
+      <div id="characterSkillsPerceptionDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsPerformance"
+      onchange="onChangeSkills(this,'characterPerformanceDiceBonus','characterCharisma')">
+      <div class="agilityLabel">Выступление(Хар)</div></input>
+      <div id="characterSkillsPerformanceDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsConviction"
+      onchange="onChangeSkills(this,'characterConvictionDiceBonus','characterCharisma')">
+      <div class="agilityLabel">Убеждение(Хар)</div></input>
+      <div id="characterSkillsConvictionDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsReligion"
+      onchange="onChangeSkills(this,'characterReligionDiceBonus','characterIntellect')">
+      <div class="agilityLabel">Религия(Инт)</div></input>
+      <div id="characterSkillsReligionDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsPrestidigitation"
+      onchange="onChangeSkills(this,'characterPrestidigitationDiceBonus','characterCharisma')">
+      <div class="agilityLabel">Ловкость рук(Лов)</div></input>
+      <div id="characterSkillsPrestidigitationDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsStealth"
+      onchange="onChangeSkills(this,'characterStealthDiceBonus','characterCharisma')">
+      <div class="agilityLabel">Скрытность(Лов)</div></input>
+      <div id="characterSkillsStealthDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsSurvival"
+      onchange="onChangeSkills(this,'characterSurvivalDiceBonus','characterSapience')">
+      <div class="agilityLabel">Выживание(Муд)</div></input>
+      <div id="characterSkillsSurvivalDiceBonus" class = "indent"></div>
+    </div>
+
+    <div class="agility">
+      <input type="checkbox" class="checkboxLabel" id="characterSkillsCommunicationWithAnimals"
+      onchange="onChangeSkills(this,'characterCommunicationWithAnimalsDiceBonus','characterSapience')">
+      <div class="agilityLabelAnimal">Общение с животными(Муд)</div></input>
+      <div id="characterSkillsCommunicationWithAnimalsDiceBonus" class = "indent"></div>
+    </div>
+  </div>
+
+
+  <div class="bee1 skills">
+    <h3>Способности</h3>
+    <div id = "ability">
+    </div>
+    <div id="characterWay"></div>
+
+    <h3>Идеалы</h3>
+    <div id = "ideals"></div>
+    <h3>Черта характера</h3>
+    <div id = "feature"></div>
+    <select id="selectFeature" class="featureLabel" onchange="saveStat('characterBackgroundFeature', this.value)"></select>
+    <h3>Слабости</h3>
+    <div id = "weakness"></div>
+    <select id="selectWeakness" class="featureLabel" onchange="saveStat('characterBackgroundWeakness', this.value)"></select>
+  </div>
+  <textarea placeholder="заметки" id="notes" onchange="onSaveField(this)"></textarea>
+
+
+
+</div>
+<div class="buttonSize"><button type="button" onclick="deletePage()">delete</button></div>
+
+
+
+<script src="jsonBackgrounds.js"></script>
+<script src="jsonArmor.js"></script>
+<script src="jsonWeapon.js"></script>
+<script src="AbilityDnD5.js"></script>
+<script src="dnd.js">
+
+
+
+</script>
+</body>
+
+</html>

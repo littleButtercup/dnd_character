@@ -1,0 +1,34 @@
+// if (k == "characterBackgroundFeature") {
+//   var idealMass = document.getElementsByName('characterBackgroundFeature');
+//   for (var i = 0; i < idealMass.length; i++) {
+//     if (idealMass[i].getAttribute('title') == value) {
+//       idealMass[i].setAttribute('checked', true);
+//     }
+//   }
+//
+// }
+//
+// if (k == "characterBackgroundWeakness") {
+//   var idealMass = document.getElementsByName('characterBackgroundWeakness');
+//   for (var i = 0; i < idealMass.length; i++) {
+//     if (idealMass[i].getAttribute('title') == value) {
+//       idealMass[i].setAttribute('checked', true);
+//     }
+//   }
+//
+// }
+
+
+// if (k =='characterLevel'){
+//   document.getElementById(k).value = getStat('characterLevel');
+//   if (getStat('characterClass')){
+//     getAbilities(getStat('characterClass'), getStat('characterLevel'), getStat('characterWay'));
+//   }
+// }
+
+
+// var a = 0;
+// function clickOnButton(d) {
+//   a = (a + d) % 360;
+//   document.getElementById('Monk').setAttribute('style', 'transform: rotate(' + a + 'deg);');
+// }

@@ -1,0 +1,236 @@
+.bee {
+  display: flex;
+}
+
+.firstDisp{
+  display: inline-flex;
+}
+
+.bee1{
+  background: #F0F8FF;
+}
+
+.secondDisp{
+  display: flex;
+  align-items: baseline;
+}
+
+.thirdDisp{
+  display: flex;
+  margin-right: 10px;
+}
+
+.thirdDisp1{
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.thrdDisp1{
+  align-items:flex-start;
+}
+
+.bee2{
+  background: #F0E68C;
+}
+
+.bee3{
+  background: #eee;
+}
+
+.fourthDisp{
+  flex-basis:51;
+}
+
+.container{
+  display: flex;
+}
+
+.characteristicPanel{
+  align-items: baseline;
+  padding: 10px;
+}
+
+.container2{
+  align-items: flex-end;
+}
+
+.item1 {
+margin-top: 10px;
+}
+
+.item2 {
+  margin-left: 10px; /* default is 0 */
+}
+
+.item3 {
+  order: <3>; /* default is 0 */
+}
+
+.container3{
+  padding: 5px;
+}
+
+.container4{
+  display: flex;
+  align-items: flex-start;
+
+}
+
+.blockPhoto{
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+}
+
+#bonusMaster{
+  font-size: 30px;
+}
+
+#klassArmor{
+  font-size: 30px;
+}
+
+#characterWeapon select, #choiceArmory, #choiceShild, #damageWeapon{
+  display: block;
+}
+
+
+.container5{
+  width: 350px;
+  min-width: 350px;
+  margin: 10px;
+}
+
+.characterRow {
+  display: flex;
+  font-size: x-large;
+  align-items: baseline;
+}
+
+.indent{
+  margin : 0px 10px;
+
+}
+
+.characterInput{
+  width: 5ex;
+  font-size: inherit;
+}
+
+.skills{
+  padding: 10px;
+  flex-shrink: 1;
+}
+
+.agility {
+  display: flex;
+  align-items: self-end;
+  margin-bottom: 5px;
+
+}
+
+.equipmentBlock{
+  display: flex;
+  width: 350px;
+  min-width: 350px;
+  margin: 10px;
+}
+
+.healthInput{
+  width: 5ex;
+  font-size: inherit;
+}
+
+.delimiter{
+  font-size: x-large;
+  font-weight: bold;
+  margin: 5px;
+}
+
+.centerCont{
+  align-items: center;
+}
+
+.helthLabel{
+  margin-top: 10px;
+}
+
+.checkboxLabel{
+  margin-inline: initial;
+}
+
+.agilityLabel{
+  margin-left: 5px;
+}
+.agilityLabelAnimal{
+  margin-left: 5px;
+  width: max-content;
+}
+
+.buttonSize{
+  margin-top: 30px;
+}
+
+.widthSize{
+  width: 6ex;
+  margin-left: 5px;
+  margin-right: 5px;
+
+}
+
+.choiceCharacter{
+  display: flex;
+  align-items: center
+}
+
+.choiceCharacterDnD{
+  margin-right: 10px;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.featureLabel{
+  max-width: 50ex;
+}
+
+.weaponContainer{
+  display: flex;
+}
+
+.agilitySize{
+  font-size: small;
+}
+
+.bolderLabel{
+  font-weight: bolder;
+}
+
+.bolderLabel1{
+  margin-top: 5px;
+  max-width: 50ex;
+}
+
+.descriptionAbility{
+  font-size: small;
+  background: LightBlue;
+  padding: 5px;
+}
+
+.descriptionAbilityHiden{
+  display: none;
+}
+
+#avatar{
+  max-width: 50ex;
+  max-height: 70ex;
+}
