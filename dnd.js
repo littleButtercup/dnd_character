@@ -16,7 +16,7 @@ function onChangeStat(field) {
   return skill;
 }
 
- // расчёт бонусного числа навыка
+ // расчёт только бонусного числа
 function bonusNumber(skillBonus) {
   return Math.floor((skillBonus - 10) / 2);
 }
@@ -137,7 +137,7 @@ function saveStat(k, value) {
     }
 
 
-
+// создание селекта и его заполнение
     if ('characterWeapon' == k){
       let columnOptions = '';
       let weapon;
@@ -158,6 +158,7 @@ function saveStat(k, value) {
       weaponHtmlByName[weaponHtmlByName.length-1].value='нет оружия';
     }
 
+// создание поля ввода для снаряжения
     if (k == 'equipment'){
       let introducedDoc = document.getElementById('introduced');
       let stings = '';
@@ -185,6 +186,7 @@ function saveStat(k, value) {
   console.log(stats);
 }
 
+//
 function getAbilities (klass, level, way){
   var ability = document.getElementById("ability");
   var abilityMass = [];
@@ -207,6 +209,7 @@ function getStat(key) {
 
 function afterSaveStat(k, value) {
 
+// вытаскивание аватарки из stat
   if (k == 'avatar'){
     if (getStat('avatar')){
       document.getElementById('avatar').src = getStat('avatar');
@@ -256,6 +259,8 @@ function afterSaveStat(k, value) {
     saveStat('bonusMaster', bonusMasters);
   }
 
+
+//расчет кд и веса
   var w;
   var armorWeight = 0;
   if (getStat('characterClass')){
@@ -322,6 +327,7 @@ function afterSaveStat(k, value) {
         }
       }
 
+// 
       if(getStat('characterWeapon')){
         var weaponArray = getStat('characterWeapon');
         var damages = '';
