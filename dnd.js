@@ -242,6 +242,7 @@ function afterSaveStat(k, value) {
     }
   }
 
+ // расчет бонуса мастерства
   if (k=='characterLevel'){
     let bonusMasters='';
     if(parseInt(value)<=4){
@@ -327,7 +328,7 @@ function afterSaveStat(k, value) {
         }
       }
 
-// 
+//
       if(getStat('characterWeapon')){
         var weaponArray = getStat('characterWeapon');
         var damages = '';
