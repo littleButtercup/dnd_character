@@ -242,6 +242,7 @@ function afterSaveStat(k, value) {
     }
   }
 
+ // расчет бонуса мастерства
   if (k=='characterLevel'){
     let bonusMasters='';
     if(parseInt(value)<=4){
@@ -327,11 +328,7 @@ function afterSaveStat(k, value) {
         }
       }
 
-<<<<<<< Updated upstream
-// 
-=======
-// расчет урона оружия
->>>>>>> Stashed changes
+// расчет урона ор
       if(getStat('characterWeapon')){
         var weaponArray = getStat('characterWeapon');
         var damages = '';
@@ -522,7 +519,7 @@ function afterSaveStat(k, value) {
       }
       choiceShildHtml.innerHTML = massChoiceShild;
 
-// сохранение в браузер 
+// сохранение в браузер
       if(!localStorage.getItem('lastPage')){
         saveStat('choiceShild', 'нет щита');
         saveStat('characterBackgroundIdeal', 'Милосердие');
