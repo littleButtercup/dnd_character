@@ -328,7 +328,7 @@ function afterSaveStat(k, value) {
         }
       }
 
-// расчет урона ор
+// расчет урона оружия
       if(getStat('characterWeapon')){
         var weaponArray = getStat('characterWeapon');
         var damages = '';
