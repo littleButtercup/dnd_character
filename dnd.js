@@ -328,7 +328,7 @@ function afterSaveStat(k, value) {
         }
       }
 
-//
+// расчет урона оружия
       if(getStat('characterWeapon')){
         var weaponArray = getStat('characterWeapon');
         var damages = '';
@@ -343,7 +343,7 @@ function afterSaveStat(k, value) {
         }
         document.getElementById('damageWeapon').innerHTML = damages;
       }
-
+// расчет веса оружия
       if (getStat('characterWeapon')){
         var weaponWeight = 0;
         var massWeapon;
@@ -362,6 +362,7 @@ function afterSaveStat(k, value) {
 
       document.getElementById('totalWeight').innerHTML = 'Общий вес ' + (parseInt(armorWeight) + parseInt(weaponWeight) + shildWeight + equipWeight);
 
+// вывод способностей по выбору пути, вывод селекта с путями
       if ((k == 'characterClass' || k == 'characterLevel') && (getStat('characterClass') && getStat('characterLevel'))){
         var stringg = '';
         for (let i = 0; i < Object.keys(window.ways)['length']; i++){
@@ -498,6 +499,8 @@ function afterSaveStat(k, value) {
       }
     }
 
+
+// загрузка options с доспехами и щитами
     function init(){
       let choiceArmoryHtml = document.getElementById('choiceArmory');
       let massChoiceArmory = [];
@@ -516,6 +519,7 @@ function afterSaveStat(k, value) {
       }
       choiceShildHtml.innerHTML = massChoiceShild;
 
+// сохранение в браузер
       if(!localStorage.getItem('lastPage')){
         saveStat('choiceShild', 'нет щита');
         saveStat('characterBackgroundIdeal', 'Милосердие');
@@ -547,6 +551,7 @@ function afterSaveStat(k, value) {
       changeList();
     };
 
+// загрузка аватарки
     function loadFile(input){
       const fileReader = new FileReader();
       fileReader.addEventListener('load', (event) => {
