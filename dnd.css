@@ -50,6 +50,13 @@
   padding: 10px;
 }
 
+.agilityPanel{
+  align-items: baseline;
+  padding-top: 10px;
+  padding-left: 30px;
+  padding-right: 10px
+}
+
 .container2{
   align-items: flex-end;
 }
@@ -224,6 +231,7 @@ input[type=number] {
   font-size: small;
   background: LightBlue;
   padding: 5px;
+  max-width: 100ex;
 }
 
 .descriptionAbilityHiden{
