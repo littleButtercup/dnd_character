@@ -85,7 +85,8 @@
     <div class="blockPhoto bee2">
 
       <img id="avatar"/>
-      <input type="file" accept="image/*" onchange="loadFile(this)">
+      <input type="file" id="selectedFile" accept="image/*" onchange="loadFile(this)" style="display: none;"/>
+      <input type="button" value="Выберите файл" onclick="document.getElementById('selectedFile').click();"/>
 
       <div class="container3">
         <div id = "klassArmor">КД</div>
@@ -184,12 +185,12 @@
         <div id="characterCharismaDiceBonus" class = "indent"></div>
       </div>
     </div>
-</div>
+  </div>
 
 
 
 
-<div class="agilityPanel bee3">
+  <div class="agilityPanel bee3">
     <h3>Навыки</h3>
     <div class="agility">
       <input type="checkbox" class="checkboxLabel" id="characterSkillsAcrobatics"

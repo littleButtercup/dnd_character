@@ -267,7 +267,7 @@ function afterSaveStat(k, value) {
   if (getStat('characterClass')){
     w = window.ability[getStat('characterClass')]['devenseWithoutArmor'];
   }
-  if ((w && w.includes(k)) || k == 'choiceArmory' || k == 'characterClass'){
+  if ((w && w.includes(k)) || k == 'choiceArmory' || k == 'characterClass' || k == 'choiceShild'){
     if(getStat('choiceArmory') && getStat('characterAgility') && getStat('characterClass')){
       var totalWeightArmor = 0;
       var totalKAArmor = 0;
@@ -377,11 +377,16 @@ function afterSaveStat(k, value) {
         }
       }
       if (stringg !== ''){
-        document.getElementById('characterWay').innerHTML = '<select onchange="saveStat(\'characterWay\',this.value)">'+ stringg +'</select>'
+        document.getElementById('characterWay').innerHTML = '<select id="way" onchange="saveStat(\'characterWay\',this.value)">'+ stringg +'</select>'
+
       }else{
         document.getElementById('characterWay').innerHTML = '';
       }
     }
+
+if(getStat('characterWay')){
+  document.getElementById('way').value = getStat('characterWay');
+}
 
   }
 
