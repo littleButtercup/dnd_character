@@ -267,8 +267,10 @@ function afterSaveStat(k, value) {
   if (getStat('characterClass')){
     w = window.ability[getStat('characterClass')]['devenseWithoutArmor'];
   }
-  if ((w && w.includes(k)) || k == 'choiceArmory' || k == 'characterClass' || k == 'choiceShild'){
+
+  if ((w && w.includes(k)) || k == 'choiceArmory' || k == 'characterClass' || k == 'choiceShild' || k == 'characterAgility' || k == 'equipment'){
     if(getStat('choiceArmory') && getStat('characterAgility') && getStat('characterClass')){
+      var equipWeight = 0;
       var totalWeightArmor = 0;
       var totalKAArmor = 0;
       var agilityMod = 0;
@@ -293,6 +295,7 @@ function afterSaveStat(k, value) {
         for(let i = 0; i < window.shild.length; i++){
           if(window.shild[i]['title'] == getStat('choiceShild')){
             shildBdc = parseInt(window.shild[i]['bdc']);
+            shildWeight = parseInt(window.shild[i]['weight']);
           }
         }
       }
@@ -303,22 +306,11 @@ function afterSaveStat(k, value) {
         totalKAArmor = agilityMod + bdcArmor + armorBonus;
         document.getElementById('klassArmor').innerHTML = 'КД: ' + (totalKAArmor + shildBdc);
       }
-    }}
-
-    if (getStat('choiceShild')){
-      var shildWeight = 0;
-      for(let i = 0; i < window.shild.length; i++){
-        if(window.shild[i]['title'] == getStat('choiceShild')){
-          shildWeight = window.shild[i]['weight'];
-          shildBdc = window.shild[i]['bdc'];
-        }
-      }
     }
 
     if (getStat('equipment')){
-      var equipWeight = 0;
       var massEquip;
-      var massEquipWeight;
+      var massEquipWeight = '';
       for (let i = 0; i < getStat('equipment').length; i++){
         massEquipWeight = getStat('equipment')[i].weight;
         massEquip = getStat('equipment')[i].name;
@@ -359,231 +351,230 @@ function afterSaveStat(k, value) {
             weaponWeight = parseInt(weaponWeight) + parseInt(massWeaponWeight);
           }
         }
-
       }
     }
 
-    document.getElementById('totalWeight').innerHTML = 'Общий вес ' + (parseInt(armorWeight) + parseInt(weaponWeight) + shildWeight + equipWeight);
+    document.getElementById('totalWeight').innerHTML = 'Общий вес ' + (parseInt(armorWeight || 0) + parseInt(weaponWeight || 0) + parseInt(shildWeight || 0) + parseInt(equipWeight || 0));
+  }
 
-    // вывод способностей по выбору пути, вывод селекта с путями
-    if ((k == 'characterClass' || k == 'characterLevel') && (getStat('characterClass') && getStat('characterLevel'))){
-      var stringg = '';
-      for (let i = 0; i < Object.keys(window.ways)['length']; i++){
-        if (Object.keys(window.ways)[i] == stats['characterClass'] && window.ways[stats['characterClass']]['startLevel'].substring(5) <= stats['characterLevel']){
-          var wayss = window.ways[Object.keys(window.ways)[i]];
-          for (let i = 0; i < wayss['ways']['length']; i++){
-            stringg = stringg + '<option value="'+ wayss['ways'][i] +'">'+ wayss['ways'][i] +'</option>'
-          }
+  // вывод способностей по выбору пути, вывод селекта с путями
+  if ((k == 'characterClass' || k == 'characterLevel') && (getStat('characterClass') && getStat('characterLevel'))){
+    var stringg = '';
+    for (let i = 0; i < Object.keys(window.ways)['length']; i++){
+      if (Object.keys(window.ways)[i] == stats['characterClass'] && window.ways[stats['characterClass']]['startLevel'].substring(5) <= stats['characterLevel']){
+        var wayss = window.ways[Object.keys(window.ways)[i]];
+        for (let i = 0; i < wayss['ways']['length']; i++){
+          stringg = stringg + '<option value="'+ wayss['ways'][i] +'">'+ wayss['ways'][i] +'</option>'
         }
       }
-      if (stringg !== ''){
-        document.getElementById('characterWay').innerHTML = '<select id="way" onchange="saveStat(\'characterWay\',this.value)">'+ stringg +'</select>'
-
-      }else{
-        document.getElementById('characterWay').innerHTML = '';
-      }
     }
+    if (stringg !== ''){
+      document.getElementById('characterWay').innerHTML = '<select id="way" onchange="saveStat(\'characterWay\',this.value)">'+ stringg +'</select>'
 
-if(getStat('characterWay')){
-  document.getElementById('way').value = getStat('characterWay');
+    }else{
+      document.getElementById('characterWay').innerHTML = '';
+    }
+  }
+
+  if((k == 'characterClass' || k == 'characterLevel' || k == 'characterWay') && (getStat('characterClass') && getStat('characterLevel') && getStat('characterWay'))){
+    document.getElementById('way').value = getStat('characterWay');
+  }
 }
 
+
+function bonusArmor(agility){
+  let skiLL = Math.floor((agility - 10) / 2);
+  return skiLL;
+}
+
+
+
+function clicky(tr, rootElement){
+  let r = rootElement.getElementsByClassName('descriptionAbility')[0];
+  if (r.classList.contains('descriptionAbilityHiden')){
+    r.innerHTML = decodeURIComponent(escape(atob(tr)));
+  }else{
+    r.innerHTML = '';
   }
+  r.classList.toggle('descriptionAbilityHiden');
+}
 
-
-  function bonusArmor(agility){
-    let skiLL = Math.floor((agility - 10) / 2);
-    return skiLL;
-  }
-
-
-
-  function clicky(tr, rootElement){
-    let r = rootElement.getElementsByClassName('descriptionAbility')[0];
-    if (r.classList.contains('descriptionAbilityHiden')){
-      r.innerHTML = decodeURIComponent(escape(atob(tr)));
-    }else{
-      r.innerHTML = '';
+function deleteEquipment(index){
+  delete getStat('equipment')[index];
+  let equipmentArray = [];
+  for(let i = 0; i < getStat('equipment').length; i++){
+    if(index != i){
+      equipmentArray.push(getStat('equipment')[i]);
     }
-    r.classList.toggle('descriptionAbilityHiden');
   }
+  saveStat("equipment", equipmentArray);
+}
 
-  function deleteEquipment(index){
-    delete getStat('equipment')[index];
-    let equipmentArray = [];
-    for(let i = 0; i < getStat('equipment').length; i++){
-      if(index != i){
-        equipmentArray.push(getStat('equipment')[i]);
-      }
+
+
+
+function saveEquipment(){
+  let equipmentHtml = document.getElementsByName('newEquipment');
+  let equipmentWeightHtml = document.getElementsByName('equipmentWeight');
+  let massEquipmwent = [];
+  for(i=0; i < equipmentHtml.length; i++){
+    if (equipmentHtml[i].value || equipmentWeightHtml[i].value){
+      massEquipmwent.push ({name:equipmentHtml[i].value, weight:equipmentWeightHtml[i].value});
     }
-    saveStat("equipment", equipmentArray);
   }
+  saveStat('equipment', massEquipmwent );
+}
 
-
-
-
-  function saveEquipment(){
-    let equipmentHtml = document.getElementsByName('newEquipment');
-    let equipmentWeightHtml = document.getElementsByName('equipmentWeight');
-    let massEquipmwent = [];
-    for(i=0; i < equipmentHtml.length; i++){
-      if (equipmentHtml[i].value || equipmentWeightHtml[i].value){
-        massEquipmwent.push ({name:equipmentHtml[i].value, weight:equipmentWeightHtml[i].value});
-      }
+function saveWeapon (){
+  let weaponHtml = document.getElementsByName('weapon');
+  let massWeapons = [];
+  for (i=0;i<weaponHtml.length;i++){
+    if (weaponHtml[i].value !=='' && weaponHtml[i].value !== 'нет оружия'){
+      massWeapons.push(weaponHtml[i].value);
     }
-    saveStat('equipment', massEquipmwent );
   }
+  saveStat('characterWeapon', massWeapons );
+}
 
-  function saveWeapon (){
-    let weaponHtml = document.getElementsByName('weapon');
-    let massWeapons = [];
-    for (i=0;i<weaponHtml.length;i++){
-      if (weaponHtml[i].value !=='' && weaponHtml[i].value !== 'нет оружия'){
-        massWeapons.push(weaponHtml[i].value);
-      }
-    }
-    saveStat('characterWeapon', massWeapons );
+function onSaveBackground(select) {
+  saveStat(select.getAttribute('id'), select.value);
+}
+
+function saveIdeal(input) {
+  saveStat('characterBackgroundIdeal', input.getAttribute('ideal'));
+}
+
+function onSaveField(field){
+  saveStat(field.getAttribute('id'), field.value);
+}
+
+function onChangeSkills(checkbox) {
+  saveStat(checkbox.getAttribute('id'), checkbox.checked);
+}
+
+function getLevel(field) {
+  return 'level' + field;
+
+}
+
+function radioGroupe(options, groupName) {
+  let  radioGroupeOptions = '';
+  for (var i = 0; i < options.length; i++) {
+    radioGroupeOptions = radioGroupeOptions +
+    '<option name="' + groupName + '">' + options[i] + '</option>';
   }
+  return radioGroupeOptions;
+}
 
-  function onSaveBackground(select) {
-    saveStat(select.getAttribute('id'), select.value);
-  }
-
-  function saveIdeal(input) {
-    saveStat('characterBackgroundIdeal', input.getAttribute('ideal'));
-  }
-
-  function onSaveField(field){
-    saveStat(field.getAttribute('id'), field.value);
-  }
-
-  function onChangeSkills(checkbox) {
-    saveStat(checkbox.getAttribute('id'), checkbox.checked);
-  }
-
-  function getLevel(field) {
-    return 'level' + field;
-
-  }
-
-  function radioGroupe(options, groupName) {
-    let  radioGroupeOptions = '';
-    for (var i = 0; i < options.length; i++) {
-      radioGroupeOptions = radioGroupeOptions +
-      '<option name="' + groupName + '">' + options[i] + '</option>';
-    }
-    return radioGroupeOptions;
-  }
-
-  function loadPage(value){
-    if(value == 'new'){
-      localStorage.removeItem('lastPage');
-    }else{
-      localStorage.setItem('lastPage', value);
-    }
-    location.reload();
-  }
-
-  function deletePage(){
-    let pageid = localStorage.getItem('lastPage');
+function loadPage(value){
+  if(value == 'new'){
     localStorage.removeItem('lastPage');
-    localStorage.removeItem(pageid);
-    location.reload();
+  }else{
+    localStorage.setItem('lastPage', value);
   }
+  location.reload();
+}
 
-  function changeList(){
-    let characterOption = document.getElementById('characterOption');
-    let keysOption = Object.keys(localStorage);
-    let o ='';
-    for(let i = 0; i < keysOption.length; i++){
-      let k = keysOption[i];
-      o = o + '<option value="'+ k +'">'+ k +'</option>' ;
-    }
-    characterOption.innerHTML = o + '<option value="new">новый персонаж</option>';
-    if(localStorage.getItem('lastPage')){
-      characterOption.value = localStorage.getItem('lastPage');
-    }else{
-      characterOption.value = 'new';
+function deletePage(){
+  let pageid = localStorage.getItem('lastPage');
+  localStorage.removeItem('lastPage');
+  localStorage.removeItem(pageid);
+  location.reload();
+}
+
+function changeList(){
+  let characterOption = document.getElementById('characterOption');
+  let keysOption = Object.keys(localStorage);
+  let o ='';
+  for(let i = 0; i < keysOption.length; i++){
+    let k = keysOption[i];
+    o = o + '<option value="'+ k +'">'+ k +'</option>' ;
+  }
+  characterOption.innerHTML = o + '<option value="new">новый персонаж</option>';
+  if(localStorage.getItem('lastPage')){
+    characterOption.value = localStorage.getItem('lastPage');
+  }else{
+    characterOption.value = 'new';
+  }
+}
+
+
+// загрузка options с доспехами и щитами
+function init(){
+  let choiceArmoryHtml = document.getElementById('choiceArmory');
+  let massChoiceArmory = [];
+  for(let i = 0; i < window.armor.length; i++ ){
+    massChoiceArmory.push('<option value = "' + window.armor[i].title + '">'+ window.armor[i].armorType + ' ' + window.armor[i].title + '</option>');
+  }
+  choiceArmoryHtml.innerHTML = massChoiceArmory.join();
+
+  let choiceShildHtml = document.getElementById('choiceShild');
+  let massChoiceShild = '';
+  for (let i = 0; i<window.shild.length; i++ ){
+    massChoiceShild = massChoiceShild + '<option value = "' + window.shild[i].title + '">' + window.shild[i].armorType + ' ' + window.shild[i].title + ' </option>';
+    if(window.shild[1].title == getStat('choiceShild')){
+      shildWeight = window.shild[i].weight;
     }
   }
+  choiceShildHtml.innerHTML = massChoiceShild;
 
-
-  // загрузка options с доспехами и щитами
-  function init(){
-    let choiceArmoryHtml = document.getElementById('choiceArmory');
-    let massChoiceArmory = [];
-    for(let i = 0; i < window.armor.length; i++ ){
-      massChoiceArmory.push('<option value = "' + window.armor[i].title + '">'+ window.armor[i].armorType + ' ' + window.armor[i].title + '</option>');
+  // сохранение в браузер
+  if(!localStorage.getItem('lastPage')){
+    saveStat('choiceShild', 'нет щита');
+    saveStat('characterBackgroundIdeal', 'Милосердие');
+    saveStat('characterBackgroundFeature', 'Я идеализирую конкретного героя своей веры и постоянно ссылаюсь на его поступки и свершения');
+    saveStat('characterBackgroundWeakness', 'Я не проявляю снисходительности к другим, но к себе я ещё более суров');
+    saveStat('characterBackground', "Прислужник");
+    saveStat('characterStrangth', '10');
+    saveStat('characterAgility', '10');
+    saveStat('characterPhysique', '10');
+    saveStat('characterIntellect', '10');
+    saveStat('characterSapience', '10');
+    saveStat('characterCharisma', '10');
+    saveStat('characterClass', 'Монах');
+    saveStat('characterLevel', '1');
+    saveStat('characterName', '');
+    saveStat('playerName', '');
+    saveStat('characterWeapon', ["булава","кинжал","ручной топор"]);
+    saveStat('choiceArmory', 'нет брони');
+    saveStat('equipment',[]);
+  }else {
+    let pageid = localStorage.getItem('lastPage');
+    let stats = JSON.parse(localStorage.getItem(pageid));
+    let keysStats = Object.keys(stats);
+    for(let i = 0; i < keysStats.length; i++){
+      let k = keysStats[i];
+      saveStat(k,stats[k]);
     }
-    choiceArmoryHtml.innerHTML = massChoiceArmory.join();
-
-    let choiceShildHtml = document.getElementById('choiceShild');
-    let massChoiceShild = '';
-    for (let i = 0; i<window.shild.length; i++ ){
-      massChoiceShild = massChoiceShild + '<option value = "' + window.shild[i].title + '">' + window.shild[i].armorType + ' ' + window.shild[i].title + ' </option>';
-      if(window.shild[1].title == getStat('choiceShild')){
-        shildWeight = window.shild[i].weight;
-      }
-    }
-    choiceShildHtml.innerHTML = massChoiceShild;
-
-    // сохранение в браузер
-    if(!localStorage.getItem('lastPage')){
-      saveStat('choiceShild', 'нет щита');
-      saveStat('characterBackgroundIdeal', 'Милосердие');
-      saveStat('characterBackgroundFeature', 'Я идеализирую конкретного героя своей веры и постоянно ссылаюсь на его поступки и свершения');
-      saveStat('characterBackgroundWeakness', 'Я не проявляю снисходительности к другим, но к себе я ещё более суров');
-      saveStat('characterBackground', "Прислужник");
-      saveStat('characterStrangth', '10');
-      saveStat('characterAgility', '10');
-      saveStat('characterPhysique', '10');
-      saveStat('characterIntellect', '10');
-      saveStat('characterSapience', '10');
-      saveStat('characterCharisma', '10');
-      saveStat('characterClass', 'Монах');
-      saveStat('characterLevel', '1');
-      saveStat('characterName', '');
-      saveStat('playerName', '');
-      saveStat('characterWeapon', ["булава","кинжал","ручной топор"]);
-      saveStat('choiceArmory', 'нет брони');
-      saveStat('equipment',[]);
-    }else {
-      let pageid = localStorage.getItem('lastPage');
-      let stats = JSON.parse(localStorage.getItem(pageid));
-      let keysStats = Object.keys(stats);
-      for(let i = 0; i < keysStats.length; i++){
-        let k = keysStats[i];
-        saveStat(k,stats[k]);
-      }
-    }
-    changeList();
-  };
-
-  // загрузка аватарки
-  function loadFile(input){
-    const fileReader = new FileReader();
-    fileReader.addEventListener('load', (event) => {
-      var e = event.target.result;
-      saveStat('avatar', e);
-    });
-    fileReader.readAsDataURL(input.files[0]);
   }
+  changeList();
+};
 
-  // function freeMemory(image){
-  //     URL.revokeObjectURL(image.src);
-  // }
-  // btoa(unescape(encodeURIComponent('Сережа')))
-  // decodeURIComponent(escape(atob("0KHQtdGA0LXQttCw")))
-  // let yr = [4,9,5,6,3,5,4,3,6];
-  // let y;
-  // let m;
-  // for (let i = 0; i<yr.length;i++){
-  //   y = yr[i];
-  //   for(let q = 0; q<yr.length;q++){
-  //     m = yr[q];
-  //     if (y==m){
-  //       let l = m;
-  //       console.log(l);
-  //     }
-  //   }
-  // };
+// загрузка аватарки
+function loadFile(input){
+  const fileReader = new FileReader();
+  fileReader.addEventListener('load', (event) => {
+    var e = event.target.result;
+    saveStat('avatar', e);
+  });
+  fileReader.readAsDataURL(input.files[0]);
+}
+
+// function freeMemory(image){
+//     URL.revokeObjectURL(image.src);
+// }
+// btoa(unescape(encodeURIComponent('Сережа')))
+// decodeURIComponent(escape(atob("0KHQtdGA0LXQttCw")))
+// let yr = [4,9,5,6,3,5,4,3,6];
+// let y;
+// let m;
+// for (let i = 0; i<yr.length;i++){
+//   y = yr[i];
+//   for(let q = 0; q<yr.length;q++){
+//     m = yr[q];
+//     if (y==m){
+//       let l = m;
+//       console.log(l);
+//     }
+//   }
+// };
