@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="dnd.css"/>
-  <title></title>
+  <title>Лист Персонажа</title>
 </head>
 
 <body>
@@ -14,12 +14,12 @@
       <select id="characterOption" onchange="loadPage(this.value)"></select>
     </div>
   </div>
-  <div class="thirdDisp1">
+  <div class="characterPartyWindow">
 
-    <input type="string" class="thirdDisp" id="characterName" placeholder = "имя персонажа" onchange="onSaveField(this)"></input>
-    <label for="characterClass" class="thirdDisp">класс</label>
+    <input type="string" class="characterPartyFields" id="characterName" placeholder = "имя персонажа" onchange="onSaveField(this)"></input>
+    <label for="characterClass" class="characterPartyFields">класс</label>
 
-    <select id="characterClass" class="thirdDisp" onchange="onSaveField(this)">
+    <select id="characterClass" class="characterPartyFields" onchange="onSaveField(this)">
       <option value="Монах">Монах</option>
       <option value="Жрец">Жрец</option>
       <option value="Чародей">Чародей</option>
@@ -34,13 +34,13 @@
       <option value="Следопыт">Следопыт</option>
     </select>
 
-    <label for="characterLevel" class="thirdDisp">уровень</label>
+    <label for="characterLevel" class="characterPartyFields">уровень</label>
 
-    <input type="number" class="thirdDisp" placeholder = "уровень персонажа" id="characterLevel" onchange="onSaveField(this)" />
+    <input type="number" class="characterPartyFields" placeholder = "уровень персонажа" id="characterLevel" onchange="onSaveField(this)" />
 
-    <div class="thirdDisp">предыстория</div>
+    <div class="characterPartyFields">предыстория</div>
 
-    <select id="characterBackground" class="thirdDisp" onchange="onSaveField(this)">
+    <select id="characterBackground" class="characterPartyFields" onchange="onSaveField(this)">
       <option value="Прислужник">Прислужник</option>
       <option value="Шарлатан">Шарлатан</option>
       <option value="Преступник">Преступник</option>
@@ -56,8 +56,8 @@
       <option value="Беспризорник">Беспризорник</option>
     </select>
 
-    <div class="thirdDisp">раса</div>
-    <select id="characterRace" class="thirdDisp" onchange="onSaveField(this)">
+    <div class="characterPartyFields">раса</div>
+    <select id="characterRace" class="characterPartyFields" onchange="onSaveField(this)">
       <option value="Ааракокра">Ааракокра</option>
       <option value="Гном">Гном</option>
       <option value="Голиаф">Голиаф</option>
@@ -75,20 +75,19 @@
       <option value="Эльф">Эльф</option>
     </select>
 
-    <input id="playerName" class="thirdDisp" placeholder="Название компании" onchange="onSaveField(this)"></input>
+    <input id="playerName" class="characterPartyFields" placeholder="Название компании" onchange="onSaveField(this)"></input>
 
   </div>
 
+  <div class="dashboardWindow ">
 
-  <div class="container4 ">
-
-    <div class="blockPhoto bee2">
+    <div class="blockPhoto photoWindowColor">
 
       <img id="avatar"/>
       <input type="file" id="selectedFile" accept="image/*" onchange="loadFile(this)" style="display: none;"/>
       <input type="button" value="Выберите файл" onclick="document.getElementById('selectedFile').click();"/>
 
-      <div class="container3">
+      <div class="dashboard">
         <div id = "klassArmor">КД</div>
         <div id = "bonusMaster"></div>
         <div id = "totalWeight"></div>
@@ -100,12 +99,12 @@
         </div>
       </div>
     </div>
-    <div class = "item2"><div class = "item1">оружие</div>
+    <div class = "inventory"><div class = "inventoryLabel">оружие</div>
     <div class="weaponContainer">
       <div id ="characterWeapon"></div>
       <div id="damageWeapon"></div>
     </div>
-    <div class = "item1">броня и щит</div>
+    <div class = "inventoryLabel">броня и щит</div>
     <div>
       <select id="choiceArmory" onchange="saveStat('choiceArmory', this.value)">
       </select>
@@ -113,15 +112,14 @@
       </select>
     </div>
 
-    <div class="item1">снаряжение</div>
+    <div class="inventoryLabel">снаряжение</div>
     <div id="introduced"></div>
   </div>
 </div>
 
-
 <div class="container">
 
-  <div class="characteristicPanel bee3">
+  <div class="characteristicPanel characteristicWindowColor">
 
     <h3>Характеристики</h3>
     <div>сила</div>
@@ -130,8 +128,6 @@
       <input type="number" class="characterInput" id="characterStrangth" onchange="onChangeStat(this, 'characterStrangthDiceBonus')" />
       <div id="characterStrangthDiceBonus" class = "indent"></div>
     </div>
-
-
 
     <div>
       <div>ловкость</div>
@@ -142,8 +138,6 @@
       </div>
     </div>
 
-
-
     <div>
       <div>телосложение</div>
       <div class="characterRow">
@@ -152,8 +146,6 @@
         <div id="characterPhysiqueDiceBonus" class = "indent"></div>
       </div>
     </div>
-
-
 
     <div>
       <div>интеллект</div>
@@ -164,8 +156,6 @@
       </div>
     </div>
 
-
-
     <div>
       <div>мудрость</div>
       <div class="characterRow">
@@ -174,8 +164,6 @@
         <div id="characterSapienceDiceBonus" class = "indent"></div>
       </div>
     </div>
-
-
 
     <div>
       <div>харизма</div>
@@ -187,10 +175,7 @@
     </div>
   </div>
 
-
-
-
-  <div class="agilityPanel bee3">
+  <div class="agilityPanel characteristicWindowColor">
     <h3>Навыки</h3>
     <div class="agility">
       <input type="checkbox" class="checkboxLabel" id="characterSkillsAcrobatics"
@@ -319,9 +304,7 @@
     </div>
   </div>
 
-
-
-  <div class="bee1 skills">
+  <div class="skillsWindowColor skills">
     <h3>Способности</h3>
     <div id = "ability">
     </div>
@@ -338,20 +321,14 @@
   </div>
   <textarea placeholder="заметки" id="notes" onchange="onSaveField(this)"></textarea>
 
-
-
 </div>
 <div class="buttonSize"><button type="button" onclick="deletePage()">delete</button></div>
-
-
 
 <script src="jsonBackgrounds.js"></script>
 <script src="jsonArmor.js"></script>
 <script src="jsonWeapon.js"></script>
 <script src="AbilityDnD5.js"></script>
 <script src="dnd.js">
-
-
 
 </script>
 </body>

@@ -1,49 +1,23 @@
 var stats = {};
 
 // загрузка options с доспехами и щитами
-
 init();
 
-function onChangeStat(field) {
-  saveStat(field.getAttribute('id'), field.value);
-}
-
-// расчёт бонусного числа навыка
-
-function bonus(skillBonus) {
-  var skill = Math.floor((skillBonus - 10) / 2);
-  if (skill === 0) { 
-    skill = '';
-  } else if (skill > 0) {
-    skill = '+' + skill;
-  }
-  return skill;
-}
-
-// расчёт только бонусного числа
-
-function bonusNumber(skillBonus) {
-  return Math.floor((skillBonus - 10) / 2);
-}
-
 // помещение данных в объект stat
-
 function saveStat(k, value) {
   if (value !== getStat(k)) {
 
     //перебор списка навыков
-
     if (window.skillsmass.includes(k)) {
       let skillsObjMassKeys = Object.keys(window.skillsObj);
       for (let i = 0; i < skillsObjMassKeys.length; i++) {
         if (window.skillsObj[skillsObjMassKeys[i]].includes(k)) {
           var bonusElemet = document.getElementById(plusDice(k));
-          bonusElemet.innerHTML = bonus(stats[skillsObjMassKeys[i]]);
+          bonusElemet.innerHTML = bonus(stats[skillsObjMassKeys[i]], '');
         }
       }
 
       // условие для потверждения навыков и установки бонуса
-
       if (value) {
         document.getElementById(k).setAttribute('checked', true);
       } else {
@@ -51,8 +25,6 @@ function saveStat(k, value) {
         var bonusElemet = document.getElementById(plusDice(k));
         bonusElemet.innerHTML = "";
       }
-
-       
 
       if (getStat('characterBackground')) {
         var backgroundsAbilities = window.backgrounds[getStat('characterBackground')]['abilities'];
@@ -71,13 +43,12 @@ function saveStat(k, value) {
       if (getStat('characterBackground')) {
         var backgroundsAbilities = window.backgrounds[getStat('characterBackground')]['abilities'];
         var backgroundsAbilitiesKeys = Object.keys(backgroundsAbilities);
-        for (let i = 0; i < backgroundsAbilitiesKeys.length; i++){
+        for (let i = 0; i < backgroundsAbilitiesKeys.length; i++) {
           saveStat(backgroundsAbilitiesKeys[i], false);
         }
       }
 
       // выведение идеалов персонажа
-      
       var selectedIdeal = window.ideal[value];
       var selectedIdealKeys = Object.keys(selectedIdeal);
       var background = document.getElementById('ideals');
@@ -97,8 +68,6 @@ function saveStat(k, value) {
       backgroundFeature.innerHTML = radioGroupe(selectedFeature, 'characterBackgroundFeature');
       backgroundFeature.value = getStat('characterBackgroundFeature');
 
-
-
       var selectedWeakness = window.weakness[value];
       var backgroundWeakness = document.getElementById('selectWeakness');
       backgroundWeakness.innerHTML = radioGroupe(selectedWeakness, 'characterBackgroundWeakness');
@@ -116,7 +85,6 @@ function saveStat(k, value) {
 
     }
 
-
     let skillsObjMassKeys = Object.keys(window.skillsObj);
 
     function plusDice(k) {
@@ -126,11 +94,11 @@ function saveStat(k, value) {
     if (skillsObjMassKeys.includes(k)) {
       document.getElementById(k).value = value;
       var bonusElemet = document.getElementById(plusDice(k));
-      bonusElemet.innerHTML = bonus(value);
+      bonusElemet.innerHTML = bonus(value, '');
       for (let i = 0; i < window.skillsObj[k].length; i++) {
         if (getStat(window.skillsObj[k][i])) {
           var bonusElemet = document.getElementById(plusDice(window.skillsObj[k][i]));
-          bonusElemet.innerHTML = bonus(value);
+          bonusElemet.innerHTML = bonus(value, '');
         }
       }
     }
@@ -149,9 +117,7 @@ function saveStat(k, value) {
       }
     }
 
-
     // создание селекта и его заполнение
-
     if ('characterWeapon' == k) {
       let columnOptions = '';
       let weapon;
@@ -173,7 +139,6 @@ function saveStat(k, value) {
     }
 
     // создание поля ввода для снаряжения
-
     if (k == 'equipment') {
       let introducedDoc = document.getElementById('introduced');
       let stings = '';
@@ -190,36 +155,28 @@ function saveStat(k, value) {
     }
 
     // сохранение в браузер
-
     if (k == 'characterName' || k == 'playerName') {
       localStorage.removeItem(localStorage.getItem('lastPage'));
     }
-
     stats[k] = value;
     afterSaveStat(k, value);
-
   }
   console.log(stats);
 }
 
 //выведение способностей по уровню
-
 function getAbilities(klass, level, way) {
   var ability = document.getElementById("ability");
   var abilityMass = [];
-  
+
   for (let i = 0; i < parseInt(level, 10); i++) {
     abilityMass.push(window.ability[klass]['levels'][getLevel(i + 1)]);
   }
   abilityMass = abilityMass.flat().filter(el => el['Путь'] == way || !el['Путь']);
   ability.innerHTML = abilityMass.flat().map(function (el) {
-    return '<div onclick="clicky(\'' + btoa(unescape(encodeURIComponent(el['Описание']))) + '\',this)">'
+    return '<div onclick="openDescription(\'' + btoa(unescape(encodeURIComponent(el['Описание']))) + '\',this)">'
       + el['Способность'] + '<div class="descriptionAbility descriptionAbilityHiden"></div></div>'
   }).join('');
-}
-
-function getWay() {
-
 }
 
 function getStat(key) {
@@ -229,13 +186,11 @@ function getStat(key) {
 function afterSaveStat(k, value) {
 
   // вытаскивание аватарки из объекта stat
-
   if (k == 'avatar') {
     if (getStat('avatar')) {
       document.getElementById('avatar').src = getStat('avatar');
     }
   }
-
 
   if (k == 'characterClass' || k == 'characterWay' || k == 'characterLevel') {
     document.getElementById(k).value = getStat(k);
@@ -244,16 +199,13 @@ function afterSaveStat(k, value) {
     }
   }
 
-
   // сохранение в браузер
-
   if (getStat('characterName') && getStat('playerName')) {
     let pageid = getStat('characterName') + ' - ' + getStat('playerName');
     localStorage.setItem('lastPage', pageid);
     localStorage.setItem(pageid, JSON.stringify(stats));
     changeList();
   }
-
 
   if (k == 'characterBackground') {
     let backgroundAbilities = window.backgrounds[value]['abilities'];
@@ -264,7 +216,6 @@ function afterSaveStat(k, value) {
   }
 
   // расчет бонуса мастерства
-
   if (k == 'characterLevel') {
     let bonusMasters = '';
     if (parseInt(value) <= 4) {
@@ -282,9 +233,7 @@ function afterSaveStat(k, value) {
     saveStat('bonusMaster', bonusMasters);
   }
 
-
   //расчет кд и веса
-
   var windowArrayAbility;
   var armorWeight = 0;
   if (getStat('characterClass')) {
@@ -295,7 +244,6 @@ function afterSaveStat(k, value) {
     k == 'characterWeapon') {
     if (getStat('choiceArmory') && getStat('characterAgility') && getStat('characterClass')) {
       var equipWeight = 0;
-      var totalWeightArmor = 0;
       var totalKAArmor = 0;
       var agilityMod = 0;
       var bdcArmor = 0;
@@ -324,7 +272,7 @@ function afterSaveStat(k, value) {
         }
       }
       if (window.ability[getStat('characterClass')]['devenseWithoutArmor'] && getStat('choiceArmory') == 'нет брони') {
-        wBonus = windowArrayAbility.map(skill => parseInt(bonusNumber(getStat(skill)))).reduce((previousValue, currentValue) => previousValue + currentValue);
+        wBonus = windowArrayAbility.map(skill => parseInt(bonus(getStat(skill, skill)))).reduce((previousValue, currentValue) => previousValue + currentValue);
         document.getElementById('klassArmor').innerHTML = 'КД: ' + (wBonus + shildBdc + 10);
       } else if (getStat('choiceArmory')) {
         totalKAArmor = agilityMod + bdcArmor + armorBonus;
@@ -345,7 +293,6 @@ function afterSaveStat(k, value) {
     }
 
     // расчет урона оружия
-
     if (getStat('characterWeapon')) {
       var weaponArray = getStat('characterWeapon');
       var damages = '';
@@ -364,7 +311,6 @@ function afterSaveStat(k, value) {
     }
 
     // расчет веса оружия
-
     if (getStat('characterWeapon')) {
       var weaponWeight = 0;
       var massWeapon;
@@ -408,15 +354,34 @@ function afterSaveStat(k, value) {
   }
 }
 
-
-function bonusArmor(agility) {
-  let skiLL = Math.floor((agility - 10) / 2);
-  return skiLL;
+function onChangeStat(field) {
+  saveStat(field.getAttribute('id'), field.value);
 }
 
+// расчёт бонусного числа навыка
+function bonus(skillBonus, armorBonus) {
+  if (armorBonus) {
+    return Math.floor((armorBonus - 10) / 2);
+  }
+  var skill = Math.floor((skillBonus - 10) / 2);
+  if (skill === 0) {
+    skill = '';
+  } else if (skill > 0) {
+    skill = '+' + skill;
+  }
+  return skill;
+}
 
+// расчёт только бонусного числа
+// function bonusNumber(numberBonus) {
+//   return Math.floor((numberBonus - 10) / 2);
+// }
 
-function clicky(tegg, rootElement) {
+function bonusArmor(agility) {
+  return Math.floor((agility - 10) / 2);
+}
+
+function openDescription(tegg, rootElement) {
   let r = rootElement.getElementsByClassName('descriptionAbility')[0];
   if (r.classList.contains('descriptionAbilityHiden')) {
     r.innerHTML = decodeURIComponent(escape(atob(tegg)));
@@ -436,9 +401,6 @@ function deleteEquipment(index) {
   }
   saveStat("equipment", equipmentArray);
 }
-
-
-
 
 function saveEquipment() {
   let equipmentHtml = document.getElementsByName('newEquipment');
@@ -461,10 +423,6 @@ function saveWeapon() {
     }
   }
   saveStat('characterWeapon', massWeapons);
-}
-
-function onSaveBackground(select) {
-  saveStat(select.getAttribute('id'), select.value);
 }
 
 function saveIdeal(input) {
@@ -525,7 +483,6 @@ function changeList() {
   }
 }
 
-
 // загрузка options с доспехами и щитами
 function init() {
   let choiceArmoryHtml = document.getElementById('choiceArmory');
@@ -552,12 +509,12 @@ function init() {
     saveStat('characterBackgroundFeature', 'Я идеализирую конкретного героя своей веры и постоянно ссылаюсь на его поступки и свершения');
     saveStat('characterBackgroundWeakness', 'Я не проявляю снисходительности к другим, но к себе я ещё более суров');
     saveStat('characterBackground', "Прислужник");
-    saveStat('characterStrangth', '10');
-    saveStat('characterAgility', '10');
-    saveStat('characterPhysique', '10');
-    saveStat('characterIntellect', '10');
-    saveStat('characterSapience', '10');
-    saveStat('characterCharisma', '10');
+    saveStat('characterStrangth', '15');
+    saveStat('characterAgility', '15');
+    saveStat('characterPhysique', '15');
+    saveStat('characterIntellect', '15');
+    saveStat('characterSapience', '15');
+    saveStat('characterCharisma', '15');
     saveStat('characterClass', 'Монах');
     saveStat('characterLevel', '1');
     saveStat('characterName', '');
@@ -589,21 +546,4 @@ function loadFile(input) {
 
 
 
-// function freeMemory(image){
-//     URL.revokeObjectURL(image.src);
-// }
-// btoa(unescape(encodeURIComponent('Сережа')))
-// decodeURIComponent(escape(atob("0KHQtdGA0LXQttCw")))
-// let yr = [4,9,5,6,3,5,4,3,6];
-// let y;
-// let m;
-// for (let i = 0; i<yr.length;i++){
-//   y = yr[i];
-//   for(let q = 0; q<yr.length;q++){
-//     m = yr[q];
-//     if (y==m){
-//       let l = m;
-//       console.log(l);
-//     }
-//   }
-// };
+

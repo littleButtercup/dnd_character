@@ -1,48 +1,23 @@
-.bee {
-  display: flex;
-}
-
-.firstDisp{
-  display: inline-flex;
-}
-
-.bee1{
+.skillsWindowColor{
   background: #F0F8FF;
 }
 
-.secondDisp{
-  display: flex;
-  align-items: baseline;
+.photoWindowColor{
+  background: #F0E68C;
 }
 
-.thirdDisp{
+.characteristicWindowColor{
+  background: #eee;
+}
+
+.characterPartyFields{
   display: flex;
   margin-right: 10px;
 }
 
-.thirdDisp1{
+.characterPartyWindow{
   display: flex;
   margin-bottom: 10px;
-}
-
-.thrdDisp1{
-  align-items:flex-start;
-}
-
-.bee2{
-  background: #F0E68C;
-}
-
-.bee3{
-  background: #eee;
-}
-
-.fourthDisp{
-  flex-basis:51;
-}
-
-.container{
-  display: flex;
 }
 
 .characteristicPanel{
@@ -57,27 +32,23 @@
   padding-right: 10px
 }
 
-.container2{
-  align-items: flex-end;
-}
-
-.item1 {
+.inventoryLabel {
 margin-top: 10px;
 }
 
-.item2 {
+.inventory {
   margin-left: 10px; /* default is 0 */
 }
 
-.item3 {
-  order: <3>; /* default is 0 */
+.container{
+  display: flex;
 }
 
-.container3{
+.dashboard{
   padding: 5px;
 }
 
-.container4{
+.dashboardWindow{
   display: flex;
   align-items: stretch;
 
@@ -99,13 +70,6 @@ margin-top: 10px;
 
 #characterWeapon select, #choiceArmory, #choiceShild, #damageWeapon{
   display: block;
-}
-
-
-.container5{
-  width: 350px;
-  min-width: 350px;
-  margin: 10px;
 }
 
 .characterRow {
@@ -193,7 +157,6 @@ margin-top: 10px;
 .choiceCharacterDnD{
   margin-right: 10px;
 }
-
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
