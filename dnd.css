@@ -33,11 +33,11 @@
 }
 
 .inventoryLabel {
-margin-top: 10px;
+  margin-top: 10px;
 }
 
 .inventory {
-  margin-left: 10px; /* default is 0 */
+  margin-left: 10px; 
 }
 
 .container{
@@ -51,7 +51,6 @@ margin-top: 10px;
 .dashboardWindow{
   display: flex;
   align-items: stretch;
-
 }
 
 .blockPhoto{
@@ -144,7 +143,6 @@ margin-top: 10px;
   width: 6ex;
   margin-left: 5px;
   margin-right: 5px;
-
 }
 
 .choiceCharacter{
@@ -162,7 +160,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
 }
